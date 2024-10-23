@@ -1,0 +1,10 @@
+@tailwind components;
+@tailwind utilities;
+
+.ProseMirror.editor {
+  outline: none;
+}
+
+ul, ol {
+  padding-inline-start: 26px;
+}

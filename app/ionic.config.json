@@ -1,0 +1,7 @@
+{
+  "name": "ArveleaWriter",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}

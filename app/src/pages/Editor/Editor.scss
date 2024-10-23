@@ -1,0 +1,119 @@
+//TODO: Consider finding a way to avoid hard-coding the colors here.
+body {
+  min-height: calc(100vh + 1px);
+  background: #f7f7f7 !important;
+  @media (prefers-color-scheme: dark) { 
+    background: #0d0d0d !important;
+  }
+}
+
+ion-app {
+  border-bottom-color: #c2c2c2 !important;
+  @media (prefers-color-scheme: dark) {
+    border-bottom-color: #2e2e2e !important;
+  }
+}
+
+.milkdown-list-item {
+  display: flex;
+  margin-left: -15px;
+  ion-checkbox {
+    margin-right: 9px;
+    margin-top: 13px;
+  }
+}
+
+ion-buttons {
+  display: flex;
+  flex-direction: row;
+}
+
+ion-content textarea, [data-milkdown-root="true"] .milkdown {
+  min-height: 100%;
+  min-width: 100%;  
+  border: none;
+  outline: none;
+  margin-right: var(--ion-safe-area-right);
+  margin-bottom: var(--ion-safe-area-bottom);
+  margin-left: var(--ion-safe-area-left);
+  padding: 0 10px;
+}
+
+[data-milkdown-root="true"] {
+  min-height: 100%;
+  box-sizing: content-box;
+  display: flex;
+  .milkdown {
+    &:not(:last-child) {
+      display: none;
+    }
+    pre {
+      padding: 10px;
+      background: var(--ion-color-step-50, var(--ion-color-light-tint));
+      border: 1px solid var(--ion-color-step-200, var(--ion-color-light-shade));
+      border-radius: 5px;
+    }
+    a {
+      color: canvastext;
+      text-decoration: initial;
+    }
+    .ProseMirror.editor {
+      min-height: 100%;
+      margin-top: -1em;
+      padding-top: 1em;
+      box-sizing: content-box;
+      user-modify: read-write-plaintext-only;
+    }
+  }
+}
+
+ion-content textarea {
+  padding-top: 16px;
+}
+
+ion-title {
+  ion-button {
+    max-width: 100%;
+  }
+}
+
+ion-button {
+  ion-title {
+    padding: initial;
+    position: initial;
+    text-transform: initial;
+    line-height: normal;
+  }
+}
+
+ion-popover {
+  //TODO: Check if this ion-list style is still needed.
+  ion-list {
+    --ion-safe-area-left: 0;
+    --ion-safe-area-right: 0;
+  }
+  @media (prefers-color-scheme: dark) { 
+    --background: var(--ion-color-step-100);
+  }
+}
+
+//TODO: Consider moving this class somewhere to make it "globally accessible".
+ion-searchbar.no-search .searchbar-input-container {
+  & > ion-icon {
+    display: none;
+  }
+  & > input {
+    padding-left: 0.75rem !important;
+  }
+}
+
+.file-settings-buttons {
+  padding: 12px;
+  padding-top: 0;
+  display: flex;
+  gap: 12px;
+  & > ion-button {
+    flex: 1;
+    margin: 0;
+  }
+}

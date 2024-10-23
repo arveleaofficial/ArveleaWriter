@@ -1,0 +1,81 @@
+PODS:
+  - Capacitor (6.1.0):
+    - CapacitorCordova
+  - CapacitorApp (6.0.0):
+    - Capacitor
+  - CapacitorCordova (6.1.0)
+  - CapacitorHaptics (6.0.0):
+    - Capacitor
+  - CapacitorKeyboard (6.0.1):
+    - Capacitor
+  - CapacitorNativeFiles (0.0.1):
+    - Capacitor
+  - CapacitorSplashScreen (6.0.1):
+    - Capacitor
+  - CapacitorStatusBar (6.0.0):
+    - Capacitor
+  - CordovaPlugins (6.1.0):
+    - CapacitorCordova
+  - PurchasesHybridCommon (13.2.1):
+    - RevenueCat (= 5.3.3)
+  - RevenueCat (5.3.3)
+  - RevenuecatPurchasesCapacitor (9.0.2):
+    - Capacitor
+    - PurchasesHybridCommon (= 13.2.1)
+
+DEPENDENCIES:
+  - "Capacitor (from `../../node_modules/@capacitor/ios`)"
+  - "CapacitorApp (from `../../node_modules/@capacitor/app`)"
+  - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
+  - "CapacitorHaptics (from `../../node_modules/@capacitor/haptics`)"
+  - "CapacitorKeyboard (from `../../node_modules/@capacitor/keyboard`)"
+  - CapacitorNativeFiles (from `../../../capacitor-native-files`)
+  - "CapacitorSplashScreen (from `../../node_modules/@capacitor/splash-screen`)"
+  - "CapacitorStatusBar (from `../../node_modules/@capacitor/status-bar`)"
+  - CordovaPlugins (from `../capacitor-cordova-ios-plugins`)
+  - "RevenuecatPurchasesCapacitor (from `../../node_modules/@revenuecat/purchases-capacitor`)"
+
+SPEC REPOS:
+  trunk:
+    - PurchasesHybridCommon
+    - RevenueCat
+
+EXTERNAL SOURCES:
+  Capacitor:
+    :path: "../../node_modules/@capacitor/ios"
+  CapacitorApp:
+    :path: "../../node_modules/@capacitor/app"
+  CapacitorCordova:
+    :path: "../../node_modules/@capacitor/ios"
+  CapacitorHaptics:
+    :path: "../../node_modules/@capacitor/haptics"
+  CapacitorKeyboard:
+    :path: "../../node_modules/@capacitor/keyboard"
+  CapacitorNativeFiles:
+    :path: "../../../capacitor-native-files"
+  CapacitorSplashScreen:
+    :path: "../../node_modules/@capacitor/splash-screen"
+  CapacitorStatusBar:
+    :path: "../../node_modules/@capacitor/status-bar"
+  CordovaPlugins:
+    :path: "../capacitor-cordova-ios-plugins"
+  RevenuecatPurchasesCapacitor:
+    :path: "../../node_modules/@revenuecat/purchases-capacitor"
+
+SPEC CHECKSUMS:
+  Capacitor: 187bd7847b6f71467015a20200a1a071be3e5f14
+  CapacitorApp: 9d53aec7101f7b030a950c5bdc4df8612576b279
+  CapacitorCordova: be703980ca797f847c3356f78fa175d21c8330c2
+  CapacitorHaptics: 9ebc9363f0e9b8eb4295088a0b474530acf1859b
+  CapacitorKeyboard: 5f32a712adf41e07a61caafb82cf29fb6d8ba123
+  CapacitorNativeFiles: 882e2bc3ea89d200ccfab696a678223aa7e783b9
+  CapacitorSplashScreen: 61645214e8f955ff2b80f16a6a3648960fe4c89f
+  CapacitorStatusBar: 2e4369f99166125435641b1908d05f561eaba6f6
+  CordovaPlugins: 6d52de7fbf7f6aed0bdb186ef7048388efc0bcc6
+  PurchasesHybridCommon: 7955b21cc5a8be78cea6dcf92f3906f3e5cec972
+  RevenueCat: d9e8b1b56bf81483cf8bb902a952a2da8749b964
+  RevenuecatPurchasesCapacitor: 8201bd324680581156ada64fb88136f042502919
+
+PODFILE CHECKSUM: 9482b85ad05dbcaab2af98254caaee4f9dab91ad
+
+COCOAPODS: 1.15.2
