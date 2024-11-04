@@ -62,7 +62,7 @@ export const AboutModal = (props: Pick<ComponentProps<typeof IonModal>, "trigger
                   >
                     ArveleaWriter™ Copyright &copy;{establishedYear + (establishedYear < currentYear ? (" - " + currentYear) : "")} Isovia LLC. All Rights Reserved.
                   </p>
-                    <hr className="bg-[var(--ion-color-light-shade)] w-full"/>
+                  <hr className="bg-[var(--ion-color-light-shade)] w-full"/>
                   <p
                     style={{
                       margin: 0,

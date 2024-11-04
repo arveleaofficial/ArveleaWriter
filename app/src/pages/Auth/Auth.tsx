@@ -17,12 +17,12 @@ export const Auth: React.FC = () => {
 
   const {
     loadingProduct,
-    freeTrialAvailable,
+    freeTrialExists,
     monthlyPrice,
     productActive,
     product,
     setProductActive,
-    freeTrialUsed,
+    freeTrialKnownNotUsed,
   } = useContext(ProductContext);
   
   useEffect(() => {
@@ -45,6 +45,12 @@ export const Auth: React.FC = () => {
   const presentErrorToast = usePresentErrorToast();
 
   const [ionLoadingOpen, setIonLoadingOpen] = useState(false);
+
+  const [freeTrialKnownAsAvailable, setFreeTrialKnownAsAvailable] = useState<boolean>();
+
+  useEffect(() => {
+    setFreeTrialKnownAsAvailable(!!freeTrialExists && !!freeTrialKnownNotUsed);
+  }, [freeTrialExists, freeTrialKnownNotUsed]);
 
   return (
     <IonPage>
@@ -107,7 +113,7 @@ export const Auth: React.FC = () => {
             >
               {
                 //TODO: Consider replacing with a "smoother" loader.
-                (loadingProduct || !product || freeTrialUsed === undefined) ? (
+                (loadingProduct || !product || freeTrialKnownNotUsed === undefined || freeTrialExists === undefined || freeTrialKnownAsAvailable === undefined) ? (
                   <IonSkeletonText
                     animated
                     style={{
@@ -116,22 +122,18 @@ export const Auth: React.FC = () => {
                   />
                 ) : (
                   <>
-                    {
-                      (!!freeTrialAvailable && !freeTrialUsed) && (
-                        <IonText
-                          color="medium"
-                        >
-                          <p
-                            className="copy"
-                            style={{
-                              marginTop: 0,
-                            }}
-                          >
-                            1-Week Free Trial, Then {monthlyPrice} per Month
-                          </p>
-                        </IonText>
-                      )
-                    }
+                    <IonText
+                      color="medium"
+                    >
+                      <p
+                        className="copy"
+                        style={{
+                          marginTop: 0,
+                        }}
+                      >
+                        1-Week Free Trial for New Users, Then {monthlyPrice} per Month
+                      </p>
+                    </IonText>
                     <IonButton
                       size="large"
                       color="primary"
@@ -157,7 +159,7 @@ export const Auth: React.FC = () => {
                         }
                       }}
                     >
-                      {/*TODO: DRY*/(!!freeTrialAvailable && !freeTrialUsed) ? "Start Free Trial" : monthlyPrice + " per Month"}
+                      {freeTrialKnownAsAvailable ? "Start Free Trial" : "Get Started"}
                     </IonButton>
                     <IonText
                       color="medium"

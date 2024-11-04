@@ -3,7 +3,7 @@ import { createContext, Dispatch, MutableRefObject, SetStateAction } from "react
 
 export const ProductContext = createContext<{
   loadingProduct?: boolean,
-  freeTrialAvailable?: boolean,
+  freeTrialExists?: boolean,
   monthlyPrice?: string,
   productId?: MutableRefObject<string | undefined>,
   productActive?: boolean,
@@ -11,5 +11,5 @@ export const ProductContext = createContext<{
   product?: PurchasesPackage,
   csd?: any,
   rco?: any,
-  freeTrialUsed?: boolean,
+  freeTrialKnownNotUsed?: boolean,
 }>({});

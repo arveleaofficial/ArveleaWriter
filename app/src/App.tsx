@@ -80,7 +80,7 @@ const App: React.FC = () => {
 
   const [product, setProduct] = useState<PurchasesPackage>();
 
-  const [freeTrialUsed, setFreeTrialUsed] = useState<boolean>();
+  const [freeTrialKnownNotUsed, setFreeTrialKnownNotUsed] = useState<boolean>();
 
   useEffect(() => {
     //setProductActive(true);
@@ -101,7 +101,7 @@ const App: React.FC = () => {
           console.log(csd);
           setCsd([...csd, customerInfo]);
           console.log(csd);
-          setFreeTrialUsed(!!customerInfo.entitlements.active["aluminum0.1"]?.originalPurchaseDate);
+          setFreeTrialKnownNotUsed(!customerInfo.entitlements.all["aluminum0.1"]?.originalPurchaseDate);
           if(typeof customerInfo.entitlements.active["aluminum0.1"] !== "undefined") {
             setProductActive(true);
           } else {
@@ -117,7 +117,7 @@ const App: React.FC = () => {
         const targetProduct = offerings.all["aluminum0.1"]["monthly"];
         if (targetProduct) {
           setProduct(targetProduct);
-          setFreeTrialAvailable(targetProduct.product.introPrice?.price === 0);
+setFreeTrialExists(targetProduct.product.introPrice?.price === 0);
           setMonthlyPrice(targetProduct.product.pricePerMonthString);
           setLoadingProduct(false);
           SplashScreen.hide();
@@ -134,7 +134,7 @@ const App: React.FC = () => {
 
   const [loadingProduct, setLoadingProduct] = useState(true);
 
-  const [freeTrialAvailable, setFreeTrialAvailable] = useState<boolean>();
+  const [freeTrialExists, setFreeTrialExists] = useState<boolean>();
 
   const [monthlyPrice, setMonthlyPrice] = useState<string | undefined>();
 
@@ -142,14 +142,14 @@ const App: React.FC = () => {
     <ProductContext.Provider
       value={{
         loadingProduct,
-        freeTrialAvailable,
+        freeTrialExists,
         monthlyPrice,
         productActive,
         product,
         setProductActive,
         csd,
         rco,
-        freeTrialUsed,
+        freeTrialKnownNotUsed,
       }}
     >
       <IonApp
