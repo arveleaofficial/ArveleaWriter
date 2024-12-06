@@ -1,27 +1,9 @@
 $logo-size: min(9.5vw, 58px);
 $logo-color: var(--ion-color-primary);
 
-.logo {
-  font-family: Arial, sans-serif;
-  display: flex;
-  align-items: center;
-  color: $logo-color;
-  stroke: $logo-color;
-  font-size: $logo-size;
-  ion-icon {
-    contain: initial;
-    margin-bottom: calc($logo-size * 0.0588235);
-  }
-  & > span {
-    display: flex;
-    //letter-spacing: calc($logo-size * -0.0294117647058824);
-    font-size: calc($logo-size * 1.26470588235294);
-    margin-left: calc($logo-size * 0.0294117647058824);
-    & > span {
-      font-size: calc($logo-size * 0.33);
-      margin-top: calc($logo-size * 0.15); 
-    }
-  }
+#logo {
+  width: 100%;
+  max-width: 521px;
 }
 
 .button-large {

@@ -76,6 +76,17 @@ public class CapacitorNativeFilesPlugin: CAPPlugin, CAPBridgedPlugin, UIDocument
             if let tintColor = call.getString("tintColor") {
                 self.documentBrowserVC?.view.tintColor = UIColor(hex: tintColor)
             }
+            
+            let browseUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+            
+            if call.getBool("startAtBrowseURL", false) {
+                self.documentBrowserVC?.revealDocument(at: browseUrl, importIfNeeded: false) { (url, error) in
+                    if let error = error {
+                        print("Error navigating to directory: \(error.localizedDescription)")
+                    }
+                }
+            }
+
             self.bridge?.viewController?.present(self.documentBrowserVC!, animated: true) {
                 self.notifyListeners("fileBrowserPresented", data: [:])
             }

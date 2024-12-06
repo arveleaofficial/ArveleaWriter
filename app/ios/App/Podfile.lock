@@ -1,27 +1,25 @@
 PODS:
-  - Capacitor (6.1.0):
+  - Capacitor (6.2.0):
     - CapacitorCordova
-  - CapacitorApp (6.0.0):
+  - CapacitorApp (6.0.2):
     - Capacitor
-  - CapacitorCordova (6.1.0)
-  - CapacitorHaptics (6.0.0):
+  - CapacitorCordova (6.2.0)
+  - CapacitorHaptics (6.0.2):
     - Capacitor
-  - CapacitorKeyboard (6.0.1):
+  - CapacitorKeyboard (6.0.3):
     - Capacitor
   - CapacitorNativeFiles (0.0.1):
     - Capacitor
-  - CapacitorSplashScreen (6.0.1):
+  - CapacitorSplashScreen (6.0.3):
     - Capacitor
-  - CapacitorStatusBar (6.0.0):
+  - CapacitorStatusBar (6.0.2):
     - Capacitor
-  - CordovaPlugins (6.1.0):
-    - CapacitorCordova
-  - PurchasesHybridCommon (13.2.1):
-    - RevenueCat (= 5.3.3)
-  - RevenueCat (5.3.3)
-  - RevenuecatPurchasesCapacitor (9.0.2):
+  - PurchasesHybridCommon (13.9.0):
+    - RevenueCat (= 5.8.0)
+  - RevenueCat (5.8.0)
+  - RevenuecatPurchasesCapacitor (9.0.7):
     - Capacitor
-    - PurchasesHybridCommon (= 13.2.1)
+    - PurchasesHybridCommon (= 13.9.0)
 
 DEPENDENCIES:
   - "Capacitor (from `../../node_modules/@capacitor/ios`)"
@@ -32,7 +30,6 @@ DEPENDENCIES:
   - CapacitorNativeFiles (from `../../../capacitor-native-files`)
   - "CapacitorSplashScreen (from `../../node_modules/@capacitor/splash-screen`)"
   - "CapacitorStatusBar (from `../../node_modules/@capacitor/status-bar`)"
-  - CordovaPlugins (from `../capacitor-cordova-ios-plugins`)
   - "RevenuecatPurchasesCapacitor (from `../../node_modules/@revenuecat/purchases-capacitor`)"
 
 SPEC REPOS:
@@ -57,25 +54,22 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor/splash-screen"
   CapacitorStatusBar:
     :path: "../../node_modules/@capacitor/status-bar"
-  CordovaPlugins:
-    :path: "../capacitor-cordova-ios-plugins"
   RevenuecatPurchasesCapacitor:
     :path: "../../node_modules/@revenuecat/purchases-capacitor"
 
 SPEC CHECKSUMS:
-  Capacitor: 187bd7847b6f71467015a20200a1a071be3e5f14
-  CapacitorApp: 9d53aec7101f7b030a950c5bdc4df8612576b279
-  CapacitorCordova: be703980ca797f847c3356f78fa175d21c8330c2
-  CapacitorHaptics: 9ebc9363f0e9b8eb4295088a0b474530acf1859b
-  CapacitorKeyboard: 5f32a712adf41e07a61caafb82cf29fb6d8ba123
-  CapacitorNativeFiles: 882e2bc3ea89d200ccfab696a678223aa7e783b9
-  CapacitorSplashScreen: 61645214e8f955ff2b80f16a6a3648960fe4c89f
-  CapacitorStatusBar: 2e4369f99166125435641b1908d05f561eaba6f6
-  CordovaPlugins: 6d52de7fbf7f6aed0bdb186ef7048388efc0bcc6
-  PurchasesHybridCommon: 7955b21cc5a8be78cea6dcf92f3906f3e5cec972
-  RevenueCat: d9e8b1b56bf81483cf8bb902a952a2da8749b964
-  RevenuecatPurchasesCapacitor: 8201bd324680581156ada64fb88136f042502919
+  Capacitor: 1f3c7b9802d958cd8c4eb63895fff85dff2e1eea
+  CapacitorApp: 2a8c3a0b0814322e5e6e15fe595f02c3808f0f8b
+  CapacitorCordova: b33e7f4aa4ed105dd43283acdd940964374a87d9
+  CapacitorHaptics: b53409aaca1203f79c6d0eb3ed5de40556339518
+  CapacitorKeyboard: 460c6f9ec5e52c84f2742d5ce2e67bbc7ab0ebb0
+  CapacitorNativeFiles: 2a7c19a51337623e3f04f8b7e37563e9ef3e555b
+  CapacitorSplashScreen: 68893659d77b5f82d753b3a70475082845e3039c
+  CapacitorStatusBar: 3b9ac7d0684770522c532d1158a1434512ab1477
+  PurchasesHybridCommon: 2e684a22e4aaf33c5fc10fd9e2ca2e27e6b7abff
+  RevenueCat: 4cd1daad3a57d2b4015ed2b4aef0a0f24ffce0a1
+  RevenuecatPurchasesCapacitor: 5521c41ce78d223bc69f05ad395556d4b6e3591a
 
-PODFILE CHECKSUM: 9482b85ad05dbcaab2af98254caaee4f9dab91ad
+PODFILE CHECKSUM: 8a28028811864c0687e58b750f5c7aba1241aff8
 
 COCOAPODS: 1.16.2

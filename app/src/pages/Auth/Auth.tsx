@@ -1,14 +1,13 @@
-import { IonButton, IonContent, IonIcon, IonLoading, IonPage, IonSkeletonText, IonText, useIonRouter } from '@ionic/react';
+import { IonButton, IonContent, IonLoading, IonPage, IonSkeletonText, IonText, useIonRouter } from '@ionic/react';
 import './Auth.scss';
-import logoIcon from "../../assets/logo-icon.svg"; 
 import { useContext, useEffect, useState } from 'react';
 import { ProductContext } from '../../context/ProductContext';
 import { useHistory } from 'react-router';
 import { useSetTouchMove } from '../../hooks/useSetTouchMove';
 import { usePresentErrorToast } from '../../hooks/usePresentErrorToast';
-import { AboutModal } from '../../components/AboutModal';
-import { Purchases, LOG_LEVEL, PurchasesPackage, PURCHASES_ERROR_CODE } from '@revenuecat/purchases-capacitor';
-import { SplashScreen } from '@capacitor/splash-screen';
+import { Purchases } from '@revenuecat/purchases-capacitor';
+import { Logo } from '../../components/Logo/Logo';
+import { AboutLink } from '../../components/AboutLink/AboutLink';
 
 export const Auth: React.FC = () => {
   const ionRouter = useIonRouter();
@@ -87,11 +86,9 @@ export const Auth: React.FC = () => {
               loadingProduct
             </button>
             */}
-            <div
-              className="logo"
-            >
-              <IonIcon icon={logoIcon} /><span>ArveleaWriter<span>™</span></span>
-            </div>
+            <Logo 
+              id="logo"
+            />
             <p
               style={{
                 marginTop: 11.7,
@@ -102,18 +99,18 @@ export const Auth: React.FC = () => {
             </p>
             <div
               //TODO: Consider "Tailwind cleanup"
-              className="w-full"
               style={{
                 height: 200,
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
+                width: "100%",
               }}
             >
               {
                 //TODO: Consider replacing with a "smoother" loader.
-                (loadingProduct || !product || freeTrialKnownNotUsed === undefined || freeTrialExists === undefined || freeTrialKnownAsAvailable === undefined) ? (
+                ((loadingProduct || !product || freeTrialKnownNotUsed === undefined || freeTrialExists === undefined || freeTrialKnownAsAvailable === undefined)) ? (
                   <IonSkeletonText
                     animated
                     style={{
@@ -216,19 +213,7 @@ export const Auth: React.FC = () => {
               }
             </div>
           </div>
-          {/*TODO: Add actual about UI from Editor*/}
-          <IonText
-            color="medium"
-            id="auth-about-modal"
-            className="mb-[var(--ion-safe-area-bottom)]"
-          >
-            <p>
-              About
-            </p>
-          </IonText>  
-          <AboutModal 
-            trigger="auth-about-modal"
-          />
+          <AboutLink />
         </div>
       </IonContent>     
     </IonPage>

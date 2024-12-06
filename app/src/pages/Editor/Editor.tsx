@@ -1,7 +1,9 @@
 import { IonButton, IonButtons, IonCheckbox, IonContent, IonFooter, IonHeader, IonPage, IonPopover, IonTitle, IonToolbar, useIonAlert } from '@ionic/react';
 import './Editor.scss';
 import { Milkdown, useEditor, useInstance } from '@milkdown/react';
-import { Editor as milkdownEditor, defaultValueCtx, rootCtx } from '@milkdown/core';
+import { Editor as milkdownEditor, defaultValueCtx, rootCtx } from '@milkdown/kit/core';
+import { nord } from '@milkdown/theme-nord';
+//import 'prism-themes/themes/prism-nord.css';
 import { gfm, toggleStrikethroughCommand } from '@milkdown/preset-gfm';
 import { commonmark,  toggleEmphasisCommand, toggleStrongCommand, wrapInBulletListCommand, wrapInOrderedListCommand, listItemSchema } from '@milkdown/preset-commonmark';
 import { ProsemirrorAdapterProvider, useNodeViewContext, useNodeViewFactory } from '@prosemirror-adapter/react';
@@ -13,17 +15,16 @@ import { Bold, Italic, List, ListOrdered, Strikethrough, ListChecks, Undo2 as Un
 import { callCommand, $view, $command } from "@milkdown/utils";
 import { Keyboard } from '@capacitor/keyboard';
 import { history, undoCommand, redoCommand } from '@milkdown/plugin-history';
-import { math } from '@milkdown/plugin-math';
-import { diagram } from '@milkdown/plugin-diagram';
-import { prism, prismConfig} from '@milkdown/plugin-prism';
-import markdown from 'refractor/lang/markdown';
-import css from 'refractor/lang/css';
-import javascript from 'refractor/lang/javascript';
-import typescript from 'refractor/lang/typescript';
-import jsx from 'refractor/lang/jsx';
-import tsx from 'refractor/lang/tsx';
-import 'prism-themes/themes/prism-nord.css';
-import type { Refractor } from 'refractor/lib/core';
+//import { math } from '@milkdown/plugin-math';
+//import { diagram } from '@milkdown/plugin-diagram';
+//import { prism, prismConfig} from '@milkdown/plugin-prism';
+//import markdown from 'refractor/lang/markdown';
+//import css from 'refractor/lang/css';
+//import javascript from 'refractor/lang/javascript';
+//import typescript from 'refractor/lang/typescript';
+//import jsx from 'refractor/lang/jsx';
+//import tsx from 'refractor/lang/tsx';
+//import type { Refractor } from 'refractor/lib/core';
 import { clipboard } from '@milkdown/plugin-clipboard';
 import { cursor } from '@milkdown/plugin-cursor';
 import { IonIcon } from '@ionic/react';
@@ -34,7 +35,7 @@ import { usePlatforms } from '../../hooks/usePlatforms';
 import { ProductContext } from '../../context/ProductContext';
 import { useHistory } from 'react-router';
 import { SplashScreen } from '@capacitor/splash-screen';
-import { AboutModal } from '../../components/AboutModal';
+import { AboutModalContext } from '../../context/AboutModalContext';
 //import { licenses } from './licenses';
 
 type SetPlaintextValue = (value?: string, options?: {
@@ -366,6 +367,7 @@ const MilkdownEditor = forwardRef<MilkdownEditorRef, {
     (root) => {
       return milkdownEditor
         .make()
+        .config(nord)
         .config((ctx) => {
           ctx.set(rootCtx, root);
           ctx.set(defaultValueCtx, initialContent);
@@ -377,7 +379,7 @@ const MilkdownEditor = forwardRef<MilkdownEditorRef, {
           }
           if (!!props.onBlur) {
             ctx.get(listenerCtx).blur(props.onBlur);
-          }
+          }/*
           ctx.set(prismConfig.key, {
             configureRefractor: (refractor: Refractor) => {
               refractor.register(markdown);
@@ -388,6 +390,7 @@ const MilkdownEditor = forwardRef<MilkdownEditorRef, {
               refractor.register(tsx);
             },
           });
+          */
         })
         .use(
           $view(listItemSchema.node, () =>
@@ -399,10 +402,10 @@ const MilkdownEditor = forwardRef<MilkdownEditorRef, {
         .use(commonmark)
         .use(gfm)
         .use(listener)
-        .use(diagram)
+        //.use(diagram)
         .use(history)
-        .use(math)
-        .use(prism)
+        //.use(math)
+        //.use(prism)
         .use(clipboard)
         .use(cursor)
         .use(wrapInTaskListCommand)
@@ -543,10 +546,13 @@ const Editor: React.FC = () => {
           fileBrowserAboutToDismissListener.remove();
         });
       
+        const startAtBrowseURL = (localStorage.getItem("dontStartAtBrowseURL") !== "true");
+        localStorage.setItem("dontStartAtBrowseURL", "true")
         const selectedFile = await CapacitorNativeFiles.selectFile?.({
           tintColor: getComputedStyle(document.documentElement).getPropertyValue("--ion-color-primary"),
           modalTransitionStyle: firstFileSelected.current ? "coverVertical" : "crossDissolve",
           hideDismissButton: !firstFileSelected.current,
+          startAtBrowseURL,
         });
         if (selectedFile) {
           if (filePath.current !== selectedFile.filePath) {
@@ -653,6 +659,8 @@ const Editor: React.FC = () => {
 
   const [presentAlert] = useIonAlert();
 
+  const aboutModalContext = useContext(AboutModalContext);
+
   return (
     <EditorContext.Provider
       value={{
@@ -703,9 +711,11 @@ const Editor: React.FC = () => {
                 expand="full"
                 fill="clear"
                 color="dark"
-                id="editor-about-modal"
                 style={{
                   whiteSpace: "nowrap",
+                }}
+                onClick={() => {
+                  aboutModalContext.setIsOpen?.(true);
                 }}
               >
                 About ArveleaWriter
@@ -718,9 +728,6 @@ const Editor: React.FC = () => {
                   }}
                 />
               </IonButton>
-              <AboutModal 
-                trigger="editor-about-modal"
-              />
             </IonPopover>
           </IonToolbar>
           {
@@ -784,7 +791,7 @@ const Editor: React.FC = () => {
                 fill="clear"
                 onClick={selectFile.current}
               >
-                Open File...
+                Browse Files...
               </IonButton>
             </div>
           )

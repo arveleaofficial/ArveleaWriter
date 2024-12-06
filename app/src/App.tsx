@@ -1,7 +1,6 @@
 import { Route } from 'react-router-dom';
-import { IonApp, IonRouterOutlet, setupIonicReact, useIonAlert } from '@ionic/react';
+import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import Editor from './pages/Editor/Editor';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -32,17 +31,17 @@ import '@ionic/react/css/palettes/dark.system.css';
 
 /* Theme variables */
 import './theme/variables.css';
-
-import './global.css';
-import { MilkdownProvider } from '@milkdown/react';
-import { Auth } from './pages/Auth/Auth';
-import { Keyboard } from '@capacitor/keyboard';
-import { useEffect, useRef } from 'react';
-import { useState } from 'react';
-import { ProductContext } from './context/ProductContext';
+import { useEffect, useState } from 'react';
 import { SplashScreen } from '@capacitor/splash-screen';
-import 'cordova-plugin-purchase';
-import { Purchases, LOG_LEVEL, PurchasesPackage, PURCHASES_ERROR_CODE, ENTITLEMENT_VERIFICATION_MODE } from '@revenuecat/purchases-capacitor';
+import { Keyboard } from '@capacitor/keyboard';
+import { ENTITLEMENT_VERIFICATION_MODE, LOG_LEVEL, Purchases, PurchasesPackage } from '@revenuecat/purchases-capacitor';
+import { ProductContext } from './context/ProductContext';
+import { AboutModalContext } from './context/AboutModalContext';
+import { MilkdownProvider } from '@milkdown/react';
+import { AboutModal } from './components/AboutModal/AboutModal';
+import Editor from './pages/Editor/Editor';
+import { Auth } from './pages/Auth/Auth';
+import './global.css';
 
 setupIonicReact({
   swipeBackEnabled: false,
@@ -76,6 +75,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     localStorage.setItem("productActive", productActive ? "true" : "false");
+    //setProductActive(true);
   }, [productActive]);
 
   const [product, setProduct] = useState<PurchasesPackage>();
@@ -138,6 +138,8 @@ setFreeTrialExists(targetProduct.product.introPrice?.price === 0);
 
   const [monthlyPrice, setMonthlyPrice] = useState<string | undefined>();
 
+  const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
+
   return (
     <ProductContext.Provider
       value={{
@@ -152,25 +154,33 @@ setFreeTrialExists(targetProduct.product.introPrice?.price === 0);
         freeTrialKnownNotUsed,
       }}
     >
-      <IonApp
-        style={{
-          //TODO: Consider finding a way to not have to hardcode the border style here.
-          borderBottom: capturedKeyboardHeight < 100 ? "0.55px solid" : undefined,
+      <AboutModalContext.Provider
+        value={{
+          isOpen: isAboutModalOpen,
+          setIsOpen: setIsAboutModalOpen,
         }}
       >
-        <MilkdownProvider>
-          <IonReactRouter>
-            <IonRouterOutlet>
-              <Route exact path="/editor">
-                <Editor />
-              </Route>
-              <Route exact path="/">
-                <Auth />
-              </Route>
-            </IonRouterOutlet>
-          </IonReactRouter>
-        </MilkdownProvider>
-      </IonApp>
+        <IonApp
+          style={{
+            //TODO: Consider finding a way to not have to hardcode the border style here.
+            borderBottom: capturedKeyboardHeight < 100 ? "0.55px solid" : undefined,
+          }}
+        >
+          <MilkdownProvider>
+            <IonReactRouter>
+              <IonRouterOutlet>
+                <Route exact path="/editor">
+                  <Editor />
+                </Route>
+                <Route exact path="/">
+                  <Auth />
+                </Route>
+              </IonRouterOutlet>
+            </IonReactRouter>
+            <AboutModal />
+          </MilkdownProvider>
+        </IonApp>
+      </AboutModalContext.Provider>
     </ProductContext.Provider>
   );
 };

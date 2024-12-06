@@ -5,6 +5,7 @@ export interface CapacitorNativeFilesPlugin extends Plugin {
     tintColor?: string,
     modalTransitionStyle?: "crossDissolve" | "coverVertical" | "flipHorizontal" | "partialCurl",
     hideDismissButton?: boolean,
+    startAtBrowseURL?: boolean,
   }) => Promise<{
     filePath?: string,
     fileContent: string,

@@ -1,15 +1,13 @@
-import { useRef, ComponentProps, useContext } from "react";
+import { useRef, ComponentProps, useContext, forwardRef, useEffect } from "react";
 import { IonButton, IonButtons, IonContent, IonHeader, IonModal, IonNav, IonTitle, IonToolbar, useIonAlert } from '@ionic/react';
-import { ProductContext } from "../context/ProductContext";
+import { ProductContext } from "../../context/ProductContext";
+import { AboutModalContext } from "../../context/AboutModalContext";
 
 const establishedYear = 2024;
 
 const currentYear = (new Date()).getFullYear();
 
-//TODO: See if this implementation can be replaced with maybe context & useIonModal. This didn't happen due to issues that were being experienced with context + useIonModal.
-export const AboutModal = (props: Pick<ComponentProps<typeof IonModal>, "trigger">) => {
-  const selfRef = useRef<HTMLIonModalElement>(null);
-
+export const AboutModal = () => {
   const {
     csd,
     rco,
@@ -17,10 +15,14 @@ export const AboutModal = (props: Pick<ComponentProps<typeof IonModal>, "trigger
 
   const [presentAlert] = useIonAlert();
 
+  const aboutModalContext = useContext(AboutModalContext);
+
   return (
     <IonModal
-      trigger={props.trigger}
-      ref={selfRef}
+      isOpen={aboutModalContext.isOpen}
+      onDidDismiss={() => {
+        aboutModalContext.setIsOpen?.(false);
+      }}
     >
       <IonNav
         root={() => {
@@ -33,7 +35,7 @@ export const AboutModal = (props: Pick<ComponentProps<typeof IonModal>, "trigger
                   >
                     <IonButton 
                       onClick={() => {
-                        selfRef.current?.dismiss();
+                        aboutModalContext.setIsOpen?.(false);
                       }}
                     >
                       Close
