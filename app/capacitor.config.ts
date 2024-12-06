@@ -1,20 +1,10 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
+//TODO: Look into changing appId
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
+  appId: 'com.blakeweissman.aluminum0',
   appName: 'ArveleaWriter',
-  webDir: 'dist',
-  server: {
-    androidScheme: 'https'
-  },
-  plugins: {
-    Keyboard: {
-      resize: "ionic",
-    },
-    SplashScreen: {
-      launchAutoHide: false,
-    }
-  }
+  webDir: 'dist'
 };
 
 export default config;
