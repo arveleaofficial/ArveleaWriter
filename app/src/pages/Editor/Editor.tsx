@@ -37,6 +37,7 @@ import { useHistory } from 'react-router';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { AboutModalContext } from '../../context/AboutModalContext';
 //import { licenses } from './licenses';
+import '@milkdown/prose/view/style/prosemirror.css';
 
 type SetPlaintextValue = (value?: string, options?: {
   doNotUpdateHistory?: boolean,
@@ -106,7 +107,7 @@ const EditorMetaTools = () => {
 const EditorTools = ({
   slot = "",
   ...props
-}: Pick<ComponentProps<typeof IonButtons>, "slot" | "style" | "className">) => {
+}: Pick<ComponentProps<typeof IonButtons>, "slot" | "style">) => {
   const [editorLoading, getMilkdownInstance] = useInstance();
 
   const {
@@ -147,12 +148,12 @@ const EditorTools = ({
   }, []);
 
   return (
-    <IonButtons
-      slot={slot}
-      className={`${props.className || ""} `}
-    >
+    <IonToolbar>
       {
         fileIsMarkdown && (
+          <IonButtons
+            slot="start"
+          >
             <div
               className="flex overflow-x-scroll"
             >
@@ -222,74 +223,79 @@ const EditorTools = ({
               >
                 <ListOrdered />
               </IonButton>
-          </div>
+            </div>
+          </IonButtons>
         )
       }
-      <div
-        className="flex relative ml-auto"
+      <IonButtons
+        slot="end"
       >
-        <div 
-          className="min-w-[18px] h-full absolute left-[-8px]"
-          style={{
-            background: "linear-gradient(270deg, var(--background) 62%, transparent)",
-          }}
-        />
-        <IonButton
-          onMouseDown={event => {
-            if (fileIsMarkdown) {
-              const editorGetResult = getMilkdownInstance();
-              if (editorGetResult) {
-                editorGetResult.action(callCommand(undoCommand.key));
-              }
-            } else if (pushPlaintextHistory !== undefined && !!setPlaintextValue && !!plaintextHistory && !!plaintextHistoryPos && plaintextHistoryPos.current !== 0) {
-              if (plaintextHistory.current[plaintextHistory.current.length - 1] !== plaintextValue && plaintextHistoryPos.current === null) {
-                clearTimeout(plaintextHistoryTimeout?.current);
-                pushPlaintextHistory();
-              }
-              if (plaintextHistoryPos.current === null) {
-                plaintextHistoryPos.current = plaintextHistory.current.length - 1;
-              }
-              plaintextHistoryPos.current--;
-              setPlaintextValue(plaintextHistory.current[plaintextHistoryPos.current], {
-                doNotUpdateHistory: true,
-              });
-            }
-            event.preventDefault();
-          }}
+        <div
+          className="flex relative ml-auto"
         >
-          <Undo />
-        </IonButton>
-        <IonButton
-          onMouseDown={event => {
-            if (fileIsMarkdown) {
-              const editorGetResult = getMilkdownInstance();
-              if (editorGetResult) {
-                editorGetResult.action(callCommand(redoCommand.key));
+          <div 
+            className="min-w-[18px] h-full absolute left-[-8px]"
+            style={{
+              background: "linear-gradient(270deg, var(--background) 62%, transparent)",
+            }}
+          />
+          <IonButton
+            onMouseDown={event => {
+              if (fileIsMarkdown) {
+                const editorGetResult = getMilkdownInstance();
+                if (editorGetResult) {
+                  editorGetResult.action(callCommand(undoCommand.key));
+                }
+              } else if (pushPlaintextHistory !== undefined && !!setPlaintextValue && !!plaintextHistory && !!plaintextHistoryPos && plaintextHistoryPos.current !== 0) {
+                if (plaintextHistory.current[plaintextHistory.current.length - 1] !== plaintextValue && plaintextHistoryPos.current === null) {
+                  clearTimeout(plaintextHistoryTimeout?.current);
+                  pushPlaintextHistory();
+                }
+                if (plaintextHistoryPos.current === null) {
+                  plaintextHistoryPos.current = plaintextHistory.current.length - 1;
+                }
+                plaintextHistoryPos.current--;
+                setPlaintextValue(plaintextHistory.current[plaintextHistoryPos.current], {
+                  doNotUpdateHistory: true,
+                });
               }
               event.preventDefault();
-            } else if (!!setPlaintextValue && !!plaintextHistory && !!plaintextHistoryPos && plaintextHistoryPos.current !== null && plaintextHistoryPos.current !== plaintextHistory.current.length - 1) {
-              plaintextHistoryPos.current++;
-              setPlaintextValue(plaintextHistory.current[plaintextHistoryPos.current], {
-                doNotUpdateHistory: true,
-              });
-            }
-          }}
-        >
-          <Redo />
-        </IonButton>
-        {
-          (!!isIphone && !!showCloseButton) && (
-            <IonButton
-              onClick={() => {
-                Keyboard.hide();
-              }}
-            >
-              Done
-            </IonButton>
-          )
-        }
-      </div>
-    </IonButtons>
+            }}
+          >
+            <Undo />
+          </IonButton>
+          <IonButton
+            onMouseDown={event => {
+              if (fileIsMarkdown) {
+                const editorGetResult = getMilkdownInstance();
+                if (editorGetResult) {
+                  editorGetResult.action(callCommand(redoCommand.key));
+                }
+                event.preventDefault();
+              } else if (!!setPlaintextValue && !!plaintextHistory && !!plaintextHistoryPos && plaintextHistoryPos.current !== null && plaintextHistoryPos.current !== plaintextHistory.current.length - 1) {
+                plaintextHistoryPos.current++;
+                setPlaintextValue(plaintextHistory.current[plaintextHistoryPos.current], {
+                  doNotUpdateHistory: true,
+                });
+              }
+            }}
+          >
+            <Redo />
+          </IonButton>
+          {
+            (!!isIphone && !!showCloseButton) && (
+              <IonButton
+                onClick={() => {
+                  Keyboard.hide();
+                }}
+              >
+                Done
+              </IonButton>
+            )
+          }
+        </div>
+      </IonButtons>
+    </IonToolbar>
   );
 };
 
@@ -419,7 +425,8 @@ const MilkdownEditor = forwardRef<MilkdownEditorRef, {
       const editorGet = editor.get();
       if (editorGet) {
         editorGet.action(replaceAll(params?.content || "", false));
-        editorGet.destroy();
+        //TODO: Commented on 12/11/24. It seems like removing this line actually fixed the issue of Milkdown erroring out occasionally with the error "Milkdown Context Not Found" after opening different files over the course of an app session. Keeping it commented in case there ends up being a reason to reconsider removing it.
+        //editorGet.destroy();
       }
     }
   }), []);
@@ -503,6 +510,16 @@ const Editor: React.FC = () => {
 
   const amountOfFileOpens = useRef(0);
 
+  const unloadLoadedFile = useRef(() => {
+    filePath.current = undefined;
+    currentContent.current = undefined;
+    recentlySavedContent.current = undefined;
+    setFileExtension(undefined);
+    setInitialContent(undefined);
+    setFileName(undefined);
+    setFileLoaded(false);
+  });
+
   const loadFile = useRef((file: {
     filePath?: string,
     fileContent?: string,
@@ -541,7 +558,15 @@ const Editor: React.FC = () => {
           firstPresentedListener.remove();
         });
 
-        const fileBrowserAboutToDismissListener = await CapacitorNativeFiles.addListener("fileBrowserAboutToDismiss", () => {
+        const fileBrowserAboutToDismissListener = await CapacitorNativeFiles.addListener("fileBrowserAboutToDismiss", async () => {
+          if (filePath.current) {
+            const doesFileExist = await CapacitorNativeFiles.doesFileExist?.({
+              filePath: filePath.current,
+            });
+            if (!doesFileExist?.fileExists) {
+              unloadLoadedFile.current();
+            }
+          }
           SplashScreen.hide();
           fileBrowserAboutToDismissListener.remove();
         });
@@ -732,9 +757,7 @@ const Editor: React.FC = () => {
           </IonToolbar>
           {
             (fileLoaded && !isIphone) && (
-              <IonToolbar>
-                <EditorTools />
-              </IonToolbar>
+              <EditorTools />
             )
           }
         </IonHeader>
@@ -776,9 +799,7 @@ const Editor: React.FC = () => {
               {
                 isIphone && (
                   <IonFooter>
-                    <IonToolbar>
-                      <EditorTools />
-                    </IonToolbar>
+                    <EditorTools />
                   </IonFooter>
                 )
               }

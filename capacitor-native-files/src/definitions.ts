@@ -17,4 +17,9 @@ export interface CapacitorNativeFilesPlugin extends Plugin {
     fileContent: string,
   }) => Promise<void>,
   closeSelectFile?: () => Promise<void>,
+  doesFileExist?: (data: {
+    filePath: string,
+  }) => Promise<{
+    fileExists: boolean,
+  }>,
 };

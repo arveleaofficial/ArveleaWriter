@@ -46,6 +46,7 @@ public class CapacitorNativeFilesPlugin: CAPPlugin, CAPBridgedPlugin, UIDocument
     public let pluginMethods: [CAPPluginMethod] = [
         CAPPluginMethod(name: "selectFile", returnType: CAPPluginReturnPromise),
         CAPPluginMethod(name: "writeToFile", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "doesFileExist", returnType: CAPPluginReturnPromise),
     ]
 
     private var call: CAPPluginCall?
@@ -198,5 +199,25 @@ public class CapacitorNativeFilesPlugin: CAPPlugin, CAPBridgedPlugin, UIDocument
             }
         }
     }
-}
+    
+    @objc func doesFileExist(_ call: CAPPluginCall) {
+        guard let filePath = call.getString("filePath") else {
+            call.reject("filePath must be provided.")
+            return
+        }
 
+        let url = URL(fileURLWithPath: filePath)
+
+        let isAccessing = url.startAccessingSecurityScopedResource()
+        defer {
+            if isAccessing {
+                url.stopAccessingSecurityScopedResource()
+            }
+        }
+        
+        let fileExists = FileManager.default.fileExists(atPath: url.path)
+        call.resolve([
+            "fileExists": fileExists
+        ])
+    }
+}
