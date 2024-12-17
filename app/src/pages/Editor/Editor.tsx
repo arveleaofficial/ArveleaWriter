@@ -554,6 +554,12 @@ const Editor: React.FC = () => {
     try {
       if (productActive) {
         const firstPresentedListener = await CapacitorNativeFiles.addListener("fileBrowserPresented", () => {
+
+          // This is a (perhaps questionable) fix for AboutModal scroll not working & text selection in the editor not properly working in every app session after the 2nd app session/launch.
+          if (!firstFileSelected.current) {
+            window.location.reload();
+          }
+
           SplashScreen.show();
           firstPresentedListener.remove();
         });

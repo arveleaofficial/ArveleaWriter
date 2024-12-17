@@ -75,6 +75,7 @@ export const Auth: React.FC = () => {
               height: "100%",
               textAlign: "center",
               margin: "auto",
+              padding: "0 12px",
             }}
           >
             {/*

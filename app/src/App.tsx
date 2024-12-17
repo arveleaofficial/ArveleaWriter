@@ -92,7 +92,6 @@ const App: React.FC = () => {
         });
         await Purchases.configure({
           apiKey: import.meta.env.VITE_REVENUE_CAT_API_KEY,
-          appUserID: import.meta.env.VITE_REVENUE_CAT_APP_USER_ID,
           entitlementVerificationMode: ENTITLEMENT_VERIFICATION_MODE.INFORMATIONAL,
         });
         await Purchases.addCustomerInfoUpdateListener((customerInfo) => {
