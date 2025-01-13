@@ -34,7 +34,7 @@ import './theme/variables.css';
 import { useEffect, useState } from 'react';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { Keyboard } from '@capacitor/keyboard';
-import { ENTITLEMENT_VERIFICATION_MODE, LOG_LEVEL, Purchases, PurchasesPackage } from '@revenuecat/purchases-capacitor';
+import { ENTITLEMENT_VERIFICATION_MODE, INTRO_ELIGIBILITY_STATUS, LOG_LEVEL, Purchases, PurchasesPackage } from '@revenuecat/purchases-capacitor';
 import { ProductContext } from './context/ProductContext';
 import { AboutModalContext } from './context/AboutModalContext';
 import { MilkdownProvider } from '@milkdown/react';
@@ -45,6 +45,7 @@ import './global.css';
 
 setupIonicReact({
   swipeBackEnabled: false,
+  mode: 'ios',
 });
 
 const App: React.FC = () => {
@@ -94,13 +95,19 @@ const App: React.FC = () => {
           apiKey: import.meta.env.VITE_REVENUE_CAT_API_KEY,
           entitlementVerificationMode: ENTITLEMENT_VERIFICATION_MODE.INFORMATIONAL,
         });
-        await Purchases.addCustomerInfoUpdateListener((customerInfo) => {
+        await Purchases.addCustomerInfoUpdateListener(async (customerInfo) => {
           console.log("addCustomerInfoUpdateListener:");
           console.log(customerInfo);
           console.log(csd);
           setCsd([...csd, customerInfo]);
           console.log(csd);
-          setFreeTrialKnownNotUsed(!customerInfo.entitlements.all["aluminum0.1"]?.originalPurchaseDate);
+          const checkTrialOrIntroductoryPriceEligibility = await Purchases.checkTrialOrIntroductoryPriceEligibility({
+            productIdentifiers: ["aluminum0.1"],
+          });
+          const {
+            status,
+          } = checkTrialOrIntroductoryPriceEligibility["aluminum0.1"];
+          setFreeTrialKnownNotUsed(status === INTRO_ELIGIBILITY_STATUS.INTRO_ELIGIBILITY_STATUS_ELIGIBLE);
           if(typeof customerInfo.entitlements.active["aluminum0.1"] !== "undefined") {
             setProductActive(true);
           } else {
