@@ -89,6 +89,9 @@ export const Auth: React.FC = () => {
             */}
             <Logo 
               id="logo"
+              style={{
+                marginBottom: 4,
+              }}
             />
             <p
               style={{
@@ -111,7 +114,7 @@ export const Auth: React.FC = () => {
             >
               {
                 //TODO: Consider replacing with a "smoother" loader.
-                ((loadingProduct || !product || freeTrialKnownNotUsed === undefined || freeTrialExists === undefined || freeTrialKnownAsAvailable === undefined)) ? (
+                false ? (
                   <IonSkeletonText
                     animated
                     style={{
@@ -138,14 +141,18 @@ export const Auth: React.FC = () => {
                       onClick={async () => {
                         setIonLoadingOpen(true);
                         try {
-                          const purchaseResult = await Purchases.purchasePackage({ 
-                            aPackage: product 
-                          });
-                          console.log(purchaseResult);
-                          if (typeof purchaseResult.customerInfo.entitlements.active["aluminum0.1"] !== "undefined") {
-                            if (setProductActive) {
-                              setProductActive(true);
+                          if (product) {
+                            const purchaseResult = await Purchases.purchasePackage({ 
+                              aPackage: product 
+                            });
+                            console.log(purchaseResult);
+                            if (typeof purchaseResult.customerInfo.entitlements.active["aluminum0.1"] !== "undefined") {
+                              if (setProductActive) {
+                                setProductActive(true);
+                              }
                             }
+                          } else {
+                            return "product undefined or not found.";
                           }
                         } catch (error) {
                           console.log(error);

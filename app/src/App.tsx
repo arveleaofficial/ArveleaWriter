@@ -72,6 +72,7 @@ const App: React.FC = () => {
   const [csd, setCsd] = useState<any[]>([]);
   const [rco, setRco] = useState<any[]>([]);
 
+  // const [productActive, setProductActive] = useState(localStorage.getItem("productActive") === "true" ? true : true);
   const [productActive, setProductActive] = useState(localStorage.getItem("productActive") === "true" ? true : false);
 
   useEffect(() => {
@@ -123,12 +124,13 @@ const App: React.FC = () => {
         const targetProduct = offerings.all["aluminum0.1"]["monthly"];
         if (targetProduct) {
           setProduct(targetProduct);
-setFreeTrialExists(targetProduct.product.introPrice?.price === 0);
+          setFreeTrialExists(targetProduct.product.introPrice?.price === 0);
           setMonthlyPrice(targetProduct.product.pricePerMonthString);
           setLoadingProduct(false);
           SplashScreen.hide();
         }
       } catch (error) {
+        //
         setProductActive(false);
       } /*finally {
         setProductActive(true);
@@ -142,7 +144,7 @@ setFreeTrialExists(targetProduct.product.introPrice?.price === 0);
 
   const [freeTrialExists, setFreeTrialExists] = useState<boolean>();
 
-  const [monthlyPrice, setMonthlyPrice] = useState<string | undefined>();
+  const [monthlyPrice, setMonthlyPrice] = useState<string | undefined | null>();
 
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
 

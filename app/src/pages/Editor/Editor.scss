@@ -20,6 +20,8 @@ ion-app {
   ion-checkbox {
     margin-right: 9px;
     margin-top: 13px;
+    outline: none;
+    height: fit-content;
   }
 }
 
