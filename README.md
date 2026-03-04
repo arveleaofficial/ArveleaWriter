@@ -1,5 +1,5 @@
 # ArveleaWriter
-Open-source markdown & text editor for iOS & iPadOS. Open & edit markdown or text files stored in the Files app.
+Open-source markdown & text editor for iOS & iPadOS. Create, edit, and store Markdown and text files locally on your iPhone or iPad or directly in iCloud Drive.
 
 This repository contains source code licensed under an AGPL-3.0 license for public ArveleaWriter releases. Internal/unreleased code and commits are not included in this repository.
 
