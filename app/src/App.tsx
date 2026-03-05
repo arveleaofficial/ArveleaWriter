@@ -72,7 +72,6 @@ const App: React.FC = () => {
   const [csd, setCsd] = useState<any[]>([]);
   const [rco, setRco] = useState<any[]>([]);
 
-  // const [productActive, setProductActive] = useState(localStorage.getItem("productActive") === "true" ? true : true);
   const [productActive, setProductActive] = useState(localStorage.getItem("productActive") === "true" ? true : false);
 
   useEffect(() => {

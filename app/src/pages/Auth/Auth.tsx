@@ -114,7 +114,7 @@ export const Auth: React.FC = () => {
             >
               {
                 //TODO: Consider replacing with a "smoother" loader.
-                false ? (
+                ((loadingProduct || !product || freeTrialKnownNotUsed === undefined || freeTrialExists === undefined || freeTrialKnownAsAvailable === undefined)) ? (
                   <IonSkeletonText
                     animated
                     style={{
